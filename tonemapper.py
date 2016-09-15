@@ -4,10 +4,10 @@ import numpy
 
 # Generic like in http://32ipi028l5q82yhj72224m8j.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf
 def generic(x):
-    a = 1.2 # contrast
-    d = 1.1 # shoulder
+    a = 1 # contrast
+    d = 1 # shoulder
 
-    mid_in = 1
+    mid_in = 0.18
     mid_out = 0.18
 
     hdr_max = 16
@@ -48,8 +48,8 @@ color_generic = []
 color_uncharted = []
 color_aces = []
 
-for x in numpy.logspace(0, 8, num=512, base=2):
-    color = x - 1.0
+for x in numpy.logspace(-8, 8, num=64, base=2):
+    color = x - 0.00390625
     color_in.append(color)
     color_generic.append(generic(color))
     color_uncharted.append(uncharted(color))
@@ -57,7 +57,7 @@ for x in numpy.logspace(0, 8, num=512, base=2):
 
 generic_graph, = plt.semilogx(color_in, color_generic, basex=2, label='Generic')
 uncharted_graph, = plt.plot(color_in, color_uncharted, label='Uncharted')
-aces_graph, = plt.plot(color_in, color_aces, label='Aces')
+aces_graph, = plt.plot(color_in, color_aces, label='ACES')
 plt.axis([0, 255, 0, 1.4])
 
 plt.legend([generic_graph, uncharted_graph, aces_graph])
