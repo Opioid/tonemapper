@@ -5,10 +5,10 @@ import numpy
 # Generic like in http://32ipi028l5q82yhj72224m8j.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf
 # but with corrections like in https://bartwronski.com/2016/09/01/dynamic-range-and-evs/comment-page-1/#comment-2360
 def generic(x, hdr_max):
-    a = 1 # contrast
+    a = 1.1 # contrast
     d = 1 # shoulder
 
-    mid_in = 0.18
+    mid_in = 0.25
     mid_out = 0.18
 
     ad = a * d

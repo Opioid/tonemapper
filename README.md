@@ -11,10 +11,10 @@ It compares the following tonemappers:
 
 The settings for the Generic Tonemapper are:
 
-- Contrast = 1
-- Shoulder = 1
-- Mid in   = 0.18
+- Contrast = 1.1
+- Shoulder = 1.0
+- Mid in   = 0.25
 - Mit out  = 0.18
-- HDR max  = 256
+- HDR max  = 256.0
 
 Both the Uncharted and ACES curve have been normalized to 256.
