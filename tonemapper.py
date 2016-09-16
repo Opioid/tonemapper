@@ -12,13 +12,15 @@ def generic(x, hdr_max):
     mid_out = 0.18
 
     ad = a * d
+
+    denom = pow(hdr_max, ad) * mid_out - pow(mid_in, ad) * mid_out
     
-    b = -((-math.pow(mid_in,a) + (mid_out*(math.pow(hdr_max,ad)*math.pow(mid_in,a) - math.pow(hdr_max,a)*pow(mid_in,ad)*mid_out))/ (math.pow(hdr_max,ad)*mid_out - math.pow(mid_in,ad)*mid_out))/ (math.pow(mid_in,ad)*mid_out))
+    b = -((-pow(mid_in, a) + (mid_out * (pow(hdr_max, ad) * pow(mid_in, a) - pow(hdr_max, a) * pow(mid_in, ad) * mid_out)) / denom) / (pow(mid_in, ad) * mid_out))
 
-    c = (math.pow(hdr_max, ad) * math.pow(mid_in, a) - math.pow(hdr_max, a) * math.pow(mid_in, ad) * mid_out) / (math.pow(hdr_max,ad) * mid_out - math.pow(mid_in, ad) * mid_out)
+    c = (pow(hdr_max, ad) * pow(mid_in, a) - pow(hdr_max, a) * pow(mid_in, ad) * mid_out) / denom
 
-    z = math.pow(x, a)
-    y = z / (math.pow(z, d) * b + c)
+    z = pow(x, a)
+    y = z / (pow(z, d) * b + c)
 
     return y
 
