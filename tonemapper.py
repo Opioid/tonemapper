@@ -45,7 +45,7 @@ def aces(x):
     return (x * (a * x + b)) / (x * (c * x + d) + e)
 
 # Plot the tonemapping curves
-plt.figure(figsize=(16, 9), dpi=80)
+plt.figure(figsize=(12.8, 7.2), dpi=120)
 
 color_in = []
 color_generic = []
