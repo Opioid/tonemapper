@@ -19,6 +19,7 @@ def generic(x, hdr_max):
 
     c = (pow(hdr_max, ad) * pow(mid_in, a) - pow(hdr_max, a) * pow(mid_in, ad) * mid_out) / denom
 
+    x = min(x, hdr_max)
     z = pow(x, a)
     y = z / (pow(z, d) * b + c)
 
@@ -61,7 +62,7 @@ color_aces = []
 
 hdr_max = 256.0
 
-for x in numpy.logspace(-8, 8, num=64, base=2):
+for x in numpy.logspace(-8, 8, num=256, base=2):
     color = x - math.pow(2, -8)
     color_in.append(color)
     color_generic.append(generic(color, hdr_max))
