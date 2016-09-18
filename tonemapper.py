@@ -4,11 +4,18 @@ import numpy
 
 # Generic like in http://32ipi028l5q82yhj72224m8j.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf
 # but with corrections like in https://bartwronski.com/2016/09/01/dynamic-range-and-evs/comment-page-1/#comment-2360
-def generic(x, hdr_max):
-    a = 1.1 # contrast
-    d = 1 # shoulder
 
-    mid_in = 0.25
+# Setting similar to Uncharted:
+# contrast = 1.55
+# shoulder = 0.995
+# mid_in = 0.33
+# mid_out = 0.18
+
+def generic(x, hdr_max):
+    a = 1.15 # contrast
+    d = 0.995 # shoulder
+
+    mid_in = 0.33
     mid_out = 0.18
 
     ad = a * d
@@ -60,7 +67,7 @@ color_generic = []
 color_uncharted = []
 color_aces = []
 
-hdr_max = 256.0
+hdr_max = 26.0
 
 for x in numpy.logspace(-8, 8, num=256, base=2):
     color = x - math.pow(2, -8)
