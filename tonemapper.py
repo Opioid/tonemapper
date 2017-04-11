@@ -6,7 +6,7 @@ import numpy
 # but with corrections like in https://bartwronski.com/2016/09/01/dynamic-range-and-evs/comment-page-1/#comment-2360
 
 # Setting similar to Uncharted:
-# contrast = 1.55
+# contrast = 1.15
 # shoulder = 0.995
 # mid_in = 0.33
 # mid_out = 0.18
@@ -59,6 +59,9 @@ def aces(x):
 def normalized_aces(x, hdr_max):
     return aces(x) / aces(hdr_max)
 
+def normalized_linear(x, hdr_max):
+    return x / hdr_max
+
 # Plot the tonemapping curves
 plt.figure(figsize=(12.8, 7.2), dpi=120)
 
@@ -66,25 +69,29 @@ color_in = []
 color_generic = []
 color_uncharted = []
 color_aces = []
+color_linear = []
 
-hdr_max = 26.0
+hdr_max = 16.0
 
-for x in numpy.logspace(-8, 8, num=256, base=2):
-    color = x - math.pow(2, -8)
+for x in numpy.logspace(-3, 5, num=256, base=2):
+    color = x - math.pow(2, -3)
     color_in.append(color)
     color_generic.append(generic(color, hdr_max))
     #color_uncharted.append(uncharted(color))
     color_uncharted.append(normalized_uncharted(color, hdr_max))
     #color_aces.append(aces(color))
     color_aces.append(normalized_aces(color, hdr_max))
+    color_linear.append(normalized_linear(color, hdr_max))
 
 plt.semilogx(color_in, color_generic, basex=2, label='Generic')
 plt.plot(color_in, color_uncharted, label='Uncharted (normalized)')
 plt.plot(color_in, color_aces, label='ACES (normalized)')
+plt.plot(color_in, color_in, label='Linear (clamped)')
+plt.plot(color_in, color_linear, label='Linear (normalized)')
 
-plt.axis([0, 255, 0, 1.4])
-plt.legend()
-plt.xlabel('Input [0, 256]')
+plt.axis([0, 31, 0, 1.1])
+plt.legend(loc=2)
+plt.xlabel('Input [0, 32]')
 plt.ylabel('Tonemapped')
 plt.grid(True)
 
