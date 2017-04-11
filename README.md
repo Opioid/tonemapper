@@ -20,4 +20,4 @@ The settings for the Generic Tonemapper are:
 Both the Uncharted and ACES curve have been normalized to 16, 
 which is the same value as HDR max for the Generic tonemapper.
 
-Linear curves are included for reference. Clamped to 1 and normalized to [0, 16] respectively.
+Linear curves are included for reference. Clamped to 1 and normalized to [0, 16], respectively.
