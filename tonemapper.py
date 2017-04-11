@@ -89,11 +89,18 @@ plt.plot(color_in, color_aces, label='ACES (normalized)')
 plt.plot(color_in, color_in, label='Linear (clamped)')
 plt.plot(color_in, color_linear, label='Linear (normalized)')
 
-plt.axis([0, 31, 0, 1.1])
+plt.axis([0, 31, 0, 1.05])
 plt.legend(loc=2)
 plt.xlabel('Input [0, 32]')
 plt.ylabel('Tonemapped')
-plt.grid(True)
+
+ax = plt.axes() 
+ax.xaxis.grid()
+ax.tick_params(which='both', # Options for both major and minor ticks
+               top='off', # turn off top ticks
+               left='off', # turn off left ticks
+               right='off',  # turn off right ticks
+               bottom='off') # turn off bottom ticks
 
 plt.show()
 
