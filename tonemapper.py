@@ -68,6 +68,7 @@ def normalized_linear(x, hdr_max):
     return x / hdr_max
 
 def plot_linear():
+    color_in = []
     # Plot the tonemapping curves
     plt.figure(figsize=(12, 6))
 
@@ -79,7 +80,7 @@ def plot_linear():
 
     hdr_max = 16.0
 
-    for x in range(0, 18):
+    for x in numpy.linspace(0, 4.1, num=256):
         color = x
         color_in.append(color)
         color_lottes.append(lottes(color, hdr_max))
@@ -95,18 +96,12 @@ def plot_linear():
     plt.plot(color_in, color_in, label='Linear (clamped)')
     plt.plot(color_in, color_linear, label='Linear (normalized)')
 
-    plt.axis([0, 16.5, 0, 1.04])
+    plt.axis([0, 4.04, 0, 1.04])
     plt.legend(loc=4)
     plt.xlabel('Input')
     plt.ylabel('Tonemapped')
 
     ax = plt.axes()
-
-    #  xlabels = ['', '', '0.015625', '0.03125', '0.0625', '0.125',
-    #             '0.25', '0.5', '1.0', '2.0', '4.0', '8.0', '16.0']
-
-    #  ax.set_xticklabels(xlabels)
-
     ax.tick_params(which='both', # Options for both major and minor ticks
                    direction='out',
                    top='off', # turn off top ticks
@@ -173,5 +168,5 @@ def plot_log():
 
     plt.savefig('tonemapper_log.png', bbox_inches='tight')
 
-plot_linear()
+#plot_linear()
 plot_log()
