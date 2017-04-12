@@ -7,7 +7,7 @@ It compares the following tonemappers:
 2. [[http://filmicgames.com/archives/75][John Hable "Uncharted" Filmic]]
 3. [[https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/][Krzysztof Narkowicz ACES approximation]]
 
-file:[[tonemapper.png]]
+[[file:tonemapper.png]]
 
 The settings for the Generic Tonemapper are:
 - Contrast = 1.15
