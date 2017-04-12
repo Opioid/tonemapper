@@ -3,6 +3,11 @@
 A python script to debug tonemapping operators.
 It compares the following tonemappers:
 
+1. [[http://32ipi028l5q82yhj72224m8j.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf][Timothy Lottes Generic]] with [[https://bartwronski.com/2016/09/01/dynamic-range-and-evs/comment-page-1/][Fixes from Bart Wronski]]
+2. [[http://filmicgames.com/archives/75][John Hable "Uncharted" Filmic]]
+3. [[https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/][Krzysztof Narkowicz ACES approximation]]
+
+file:[[tonemapper.png]]
 
 The settings for the Generic Tonemapper are:
 - Contrast = 1.15
