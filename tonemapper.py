@@ -120,4 +120,4 @@ ax.axvline(16.0, linestyle='--', color='k')
 
 # plt.show()                      
 
-plt.savefig('tonemapper.svg', bbox_inches='tight')
+plt.savefig('tonemapper.png', bbox_inches='tight')
