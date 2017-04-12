@@ -11,9 +11,9 @@ It compares the following tonemappers:
 
 The settings for the Generic Tonemapper are:
 
-- Contrast = 1.1
-- Shoulder = 1.0
-- Mid in   = 0.25
+- Contrast = 1.15
+- Shoulder = 0.995
+- Mid in   = 0.33
 - Mid out  = 0.18
 - HDR max  = 16.0
 
