@@ -20,11 +20,16 @@ def lottes(x, hdr_max):
 
     ad = a * d
 
-    denom = pow(hdr_max, ad) * mid_out - pow(mid_in, ad) * mid_out
+    midi_pow_a  = pow(mid_in, a)
+    midi_pow_ad = pow(mid_in, ad)
+    hdrm_pow_a  = pow(hdr_max, a)
+    hdrm_pow_ad = pow(hdr_max, ad)
+    u = hdrm_pow_ad * mid_out - midi_pow_ad * mid_out
+    v = midi_pow_ad * mid_out
     
-    b = -((-pow(mid_in, a) + (mid_out * (pow(hdr_max, ad) * pow(mid_in, a) - pow(hdr_max, a) * pow(mid_in, ad) * mid_out)) / denom) / (pow(mid_in, ad) * mid_out))
+    b = -((-midi_pow_a + (mid_out * (hdrm_pow_ad * midi_pow_a - hdrm_pow_a * v)) / u) / v)
 
-    c = (pow(hdr_max, ad) * pow(mid_in, a) - pow(hdr_max, a) * pow(mid_in, ad) * mid_out) / denom
+    c = (hdrm_pow_ad * midi_pow_a - hdrm_pow_a * v) / u
 
     x = min(x, hdr_max)
     z = pow(x, a)
