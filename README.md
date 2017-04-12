@@ -7,7 +7,7 @@ It compares the following tonemappers:
 2. [John Hable "Uncharted" Filmic](http://filmicgames.com/archives/75)
 3. [Krzysztof Narkowicz ACES approximation](https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/)
 
-![Tonemapper comparison](https://github.com/Opioid/tonemapper/blob/master/tonemapper.png "Tonemapper comparison")
+![Tonemapper comparison](https://github.com/Opioid/tonemapper/blob/master/tonemapper.svg "Tonemapper comparison")
 
 The settings for the Generic Tonemapper are:
 

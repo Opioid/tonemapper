@@ -78,8 +78,8 @@ color_linear = []
 
 hdr_max = 16.0
 
-for x in numpy.logspace(-3, 5, num=256, base=2):
-    color = x - math.pow(2, -3)
+for x in numpy.logspace(-1, 5, num=256, base=2):
+    color = x - math.pow(2, -1)
     color_in.append(color)
     color_lottes.append(lottes(color, hdr_max))
     #color_uncharted.append(uncharted(color))
@@ -94,19 +94,30 @@ plt.plot(color_in, color_aces, label='ACES (normalized)')
 plt.plot(color_in, color_in, label='Linear (clamped)')
 plt.plot(color_in, color_linear, label='Linear (normalized)')
 
-plt.axis([0, 31, 0, 1.05])
+plt.axis([0, 19, 0, 1.04])
 plt.legend(loc=2)
-plt.xlabel('Input [0, 32]')
+plt.xlabel('Input')
 plt.ylabel('Tonemapped')
 
 ax = plt.axes()
 
-ax.xaxis.grid()
+xlabels = ['', '', '0.015625', '0.03125', '0.0625', '0.125',
+           '0.25', '0.5', '1.0', '2.0', '4.0', '8.0', '16.0']
+
+ax.set_xticklabels(xlabels)
+
+#ax.xaxis.grid()
 ax.tick_params(which='both', # Options for both major and minor ticks
+               direction='out',
                top='off', # turn off top ticks
-               left='off', # turn off left ticks
+               left='on', # turn off left ticks
                right='off',  # turn off right ticks
-               bottom='off') # turn off bottom ticks
+               bottom='on') # turn off bottom ticks
+
+ax.axhline(1.0,  linestyle='--', color='k')
+ax.axvline(1.0, linestyle=':', color='k')
+ax.axvline(16.0, linestyle='--', color='k')
+
 # plt.show()                      
 
-plt.savefig('tonemapper.png', bbox_inches='tight')
+plt.savefig('tonemapper.svg', bbox_inches='tight')
