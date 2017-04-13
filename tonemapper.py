@@ -54,26 +54,24 @@ class Piecewise():
         # def __init__(self):
 
         def evaluate(self, x):
-            #float x0 = (x - m_offsetX)*m_scaleX;
-	    #float y0 = expf(m_lnA + m_B*logf(x0));
-	    #return y0*m_scaleY + m_offsetY;
-            x = max(x, 0.000001)
-
             x0 = (x - self.offset_x) * self.scale_x
-            y0 = math.exp(self.ln_a + self.b * math.log(x0))
+            y0 = 0.0
+
+            if x0 > 0.0:
+                y0 = math.exp(self.ln_a + self.b * math.log(x0))
             
             return y0 * self.scale_y + self.offset_y
         
     def __init__(self, hdr_max):
         self.segments = [self.Segment(), self.Segment(), self.Segment()]
 
-        x0 = 0.3
-        y0 = 0.3
-        x1 = 0.7
-        y1 = 0.7
+        x0 = 0.25
+        y0 = 0.25
+        x1 = 0.6
+        y1 = 0.6
 
-        overshoot_x = 1.0
-        overshoot_y = 1.0
+        overshoot_x = hdr_max * 4.0
+        overshoot_y = 1.5
         
 
         norm_x0 = x0 / hdr_max
@@ -87,11 +85,19 @@ class Piecewise():
         m, b = Piecewise.as_slope_intercept(norm_x0, norm_x1, y0, y1)
 
         self.segments[1].offset_x = -(b / m)
+        self.segments[1].offset_y = 0.0
+        self.segments[1].scale_x = 1.0
+        self.segments[1].scale_y = 1.0
         self.segments[1].ln_a = math.log(m)
+        self.segments[1].b = 1.0
 
         # toe segment
         toe_m = m
         ln_a, b = Piecewise.solve_a_b(norm_x0, y0, toe_m)
+        self.segments[0].offset_x = 0.0
+        self.segments[0].offset_y = 0.0
+        self.segments[0].scale_x = 1.0
+        self.segments[0].scale_y = 1.0
         self.segments[0].ln_a = ln_a
         self.segments[0].b = b
 
@@ -101,10 +107,26 @@ class Piecewise():
         
         shoulder_m = m
         ln_a, b = Piecewise.solve_a_b(shoulder_x0, shoulder_y0, shoulder_m)
+
+        self.segments[2].offset_x = 1.0 + norm_overshoot_x
+        self.segments[2].offset_y = 1.0 + overshoot_y
+        self.segments[2].scale_x = -1.0
+        self.segments[2].scale_y = -1.0        
         self.segments[2].ln_a = ln_a
         self.segments[2].b = b
-        self.segments[2].scale_x = 1.0
-        self.segments[2].scale_y = 1.0
+
+        # Normalize so that we hit 1.0 at white point
+        scale = self.segments[2].evaluate(1.0)
+        inv_scale = 1.0 / scale
+
+        self.segments[0].offset_y *= inv_scale
+        self.segments[0].scale_y *= inv_scale
+
+        self.segments[1].offset_y *= inv_scale
+        self.segments[1].scale_y *= inv_scale
+
+        self.segments[2].offset_y *= inv_scale
+        self.segments[2].scale_y *= inv_scale
         
         self.hdr_max = hdr_max
         
@@ -132,7 +154,8 @@ class Piecewise():
     @staticmethod
     def solve_a_b(x0, y0, m):
         b = (m * x0) / y0
-        return math.log(y0) - b * math.log(x0), b
+        ln_a = math.log(y0) - b * math.log(x0)
+        return ln_a, b
     
 # Uncharted like in http://filmicgames.com/archives/75Jo
 def uncharted(x):
@@ -179,11 +202,13 @@ def plot_linear():
     hdr_max = 2.0
 
     generic = Generic(hdr_max)
+    piecewise = Piecewise(hdr_max)
     
     for x in numpy.linspace(0, 2.1, num=256):
         color = x
         color_in.append(color)
         color_generic.append(generic.evaluate(color))
+        color_piecewise.append(piecewise.evaluate(color))
         #color_uncharted.append(uncharted(color))
         color_uncharted.append(normalized_uncharted(color, hdr_max))
         #color_aces.append(aces(color))
@@ -191,6 +216,7 @@ def plot_linear():
         color_linear.append(normalized_linear(color, hdr_max))
 
     plt.plot(color_in, color_generic, label='Generic')
+    plt.plot(color_in, color_piecewise, label='Piecewise')
     plt.plot(color_in, color_uncharted, label='Uncharted (normalized)')
     plt.plot(color_in, color_aces, label='ACES (normalized)')
     plt.plot(color_in, color_in, label='Linear (clamped)')
@@ -221,7 +247,7 @@ def plot_log():
 
     color_in = []
     color_generic = []
-    #color_piecewise = []
+    color_piecewise = []
     color_uncharted = []
     color_aces = []
     color_linear = []
@@ -229,13 +255,13 @@ def plot_log():
     hdr_max = 16.0
 
     generic = Generic(hdr_max)
-    #piecewise = Piecewise(hdr_max)
+    piecewise = Piecewise(hdr_max)
     
     for x in numpy.logspace(-1, 5, num=256, base=2):
         color = x - math.pow(2, -1)
         color_in.append(color)
         color_generic.append(generic.evaluate(color))
-        #color_piecewise.append(piecewise.evaluate(color))
+        color_piecewise.append(piecewise.evaluate(color))
         #color_uncharted.append(uncharted(color))
         color_uncharted.append(normalized_uncharted(color, hdr_max))
         #color_aces.append(aces(color))
@@ -243,7 +269,7 @@ def plot_log():
         color_linear.append(normalized_linear(color, hdr_max))
 
     plt.semilogx(color_in, color_generic, basex=2, label='Generic')
-    #plt.plot(color_in, color_piecewise, label='Piecewise')
+    plt.plot(color_in, color_piecewise, label='Piecewise')
     plt.plot(color_in, color_uncharted, label='Uncharted (normalized)')
     plt.plot(color_in, color_aces, label='ACES (normalized)')
     plt.plot(color_in, color_in, label='Linear (clamped)')
