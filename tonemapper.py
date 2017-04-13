@@ -14,9 +14,9 @@ import numpy
 class Generic():
     def __init__(self, hdr_max):
         a = 1.2 # contrast
-        d = 0.975 # shoulder
+        d = 0.97 # shoulder
 
-        mid_in = 0.33
+        mid_in = 0.3
         mid_out = 0.18
 
         ad = a * d

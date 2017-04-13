@@ -16,8 +16,8 @@ It plots the following filmic tonemapper curves with a fixed set of parameters:
 
 The settings for the Generic tonemapper are:
 - Contrast = 1.2
-- Shoulder = 0.975
-- Mid in   = 0.33
+- Shoulder = 0.97
+- Mid in   = 0.3
 - Mid out  = 0.18
 
 The settings for the Piecewise tonemapper are:
