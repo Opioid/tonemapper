@@ -13,7 +13,7 @@ import numpy
 
 class Generic():
     def __init__(self, hdr_max):
-        a = 1.25 # contrast
+        a = 1.2 # contrast
         d = 0.975 # shoulder
 
         mid_in = 0.33
